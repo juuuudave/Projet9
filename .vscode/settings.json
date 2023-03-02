@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "math.h": "c"
-    }
+        "math.h": "c",
+        "useless.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

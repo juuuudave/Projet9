@@ -1,74 +1,74 @@
-// #include <stdio.h> 
-// #include <stdlib.h> 
-// #include <string.h>
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h>
 
 
-// // fonction permettant de compter le nombre de caratère dans un string
-// int countCharacters(char* str) {
-//     int count = 0;
-//     while (*str != '\0') {
-//         count++;
-//         str++;
-//     }
-//     return count;
-// }
+// fonction permettant de compter le nombre de caratère dans un string
+int countCharacters(char* str) {
+    int count = 0;
+    while (*str != '\0') {
+        count++;
+        str++;
+    }
+    return count;
+}
 
-// // void searchForString(){ 
+// void searchForString(){ 
 
-// //     // On cherche la première occurrence de "test" dans "Texte de test" :
-// //     char chaine[100] = "Test de test";
-// //     char Occurence[100] = "test";
-// //     int i, j;
-// //     int len1 = strlen(chaine);
-// //     int len2 = strlen(Occurence);
+//     // On cherche la première occurrence de "test" dans "Texte de test" :
+//     char chaine[100] = "Test de test";
+//     char Occurence[100] = "test";
+//     int i, j;
+//     int len1 = strlen(chaine);
+//     int len2 = strlen(Occurence);
 
-// //     for (i = 0; i <= len1 - len2; i++) {
-// //         for (j = 0; j < len2; j++) {
-// //             if (chaine[i+j] != Occurence[j]) {
-// //                 break;
-// //             }
-// //         }
-// //         if (j == len2) {
-// //             printf("Il y avait bien \"test\" dans la chaine \n");
-// //             return;
-// //         }
-// //     }
-// //     printf("Il n'y avait pas \"test\" dans la chaine \n");
-// // }
-
-// void copyString(char destination[], char source[]) {
-//     int i = 0;
-//     while (source[i] != '\0') {
-//         destination[i] = source[i];
-//         i++;
-//     }
-//     destination[i] = '\0';
-// }
-
-// void testCopyString() {
-//     char source[] = "Hello, world!";
-//     char destination[100];
-//     copyString(destination, source);
-//     printf("Source: %s\n", source);
-//     printf("Destination: %s\n", destination);
-// }
-
-
-// void findFirstOccurrence() {
-//     char chaine[] = "Test text";
-//     char occurences[] = "ext";
-//     int i, j, found = 0;
-    
-//     for (i = 0; chaine[i] != '\0' && !found; i++) {
-//         for (j = 0; occurences[j] != '\0'; j++) {
-//             if (chaine[i] == occurences[j]) {
-//                 printf("La première occurrence de '%c' est à la position %d\n", chaine[i], i);
-//                 found = 1;
+//     for (i = 0; i <= len1 - len2; i++) {
+//         for (j = 0; j < len2; j++) {
+//             if (chaine[i+j] != Occurence[j]) {
 //                 break;
 //             }
 //         }
+//         if (j == len2) {
+//             printf("Il y avait bien \"test\" dans la chaine \n");
+//             return;
+//         }
 //     }
+//     printf("Il n'y avait pas \"test\" dans la chaine \n");
 // }
+
+void copyString(char destination[], char source[]) {
+    int i = 0;
+    while (source[i] != '\0') {
+        destination[i] = source[i];
+        i++;
+    }
+    destination[i] = '\0';
+}
+
+void testCopyString() {
+    char source[] = "Hello, world!";
+    char destination[100];
+    copyString(destination, source);
+    printf("Source: %s\n", source);
+    printf("Destination: %s\n", destination);
+}
+
+
+void findFirstOccurrence() {
+    char chaine[] = "Test text";
+    char occurences[] = "ext";
+    int i, j, found = 0;
+    
+    for (i = 0; chaine[i] != '\0' && !found; i++) {
+        for (j = 0; occurences[j] != '\0'; j++) {
+            if (chaine[i] == occurences[j]) {
+                printf("La première occurrence de '%c' est à la position %d\n", chaine[i], i);
+                found = 1;
+                break;
+            }
+        }
+    }
+}
 
 // Creez un programme qui :
 // 1 prend pour input "Titre", "Prix /u", "Quantité"
@@ -81,15 +81,25 @@
 // plus une ligne de total, affichant la somme des prix susmentionnés
 // ex : "|TOTAL| | | 180 € | ~135€|"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+
+// define pour nommer les constantes pour éviter à chaque fois de mettre le tableau[100] ou tableau[200]
+#define MAX_SIZE 100
+#define MAX_SIZE_TAB 200
+
+// structure des factures
+typedef struct 
+{
+    char titres[MAX_SIZE];
+    float prix_unitaires;
+    int quantites;
+}Factures;
+// on remplace facture par items
+Factures items[MAX_SIZE_TAB];
 
 int main() {
     // Initialisation des variables pour stocker les données
-    char titres[100][100];
-    float prix_unitaires[100];
-    int quantites[100];
+    
     int nb_lignes = 0;
 
     char continuer_str[10];
@@ -97,11 +107,11 @@ int main() {
     while (continuer) {
         // Saisie des données
         printf("Titre : ");
-        scanf("%s", titres[nb_lignes]);
+        scanf("%s", items[nb_lignes].titres);
         printf("Prix /u : ");
-        scanf("%f", &prix_unitaires[nb_lignes]);
+        scanf("%d", items[nb_lignes].prix_unitaires);
         printf("Quantité : ");
-        scanf("%d", &quantites[nb_lignes]);
+        scanf("%d", items[nb_lignes].quantites);
 
         // Incrément du nombre de lignes
         nb_lignes++;
@@ -118,9 +128,9 @@ int main() {
     printf("| Titre | Prix /u | Quantité | Prix total |\n");
     float total_prix = 0;
     for (int i = 0; i < nb_lignes; i++) {
-        float prix_total = prix_unitaires[i] * quantites[i];
+        float prix_total = items[i].prix_unitaires * items[i].quantites;
         total_prix += prix_total;
-        printf("| %s | %.2f €/u | %d | %.2f € |\n", titres[i], prix_unitaires[i], quantites[i], prix_total);
+        printf("| %s | %.2f €/u | %d | %.2f € |\n", items[i].titres, items[i].prix_unitaires, items[i].quantites, prix_total);
     }
     printf("| TOTAL |  |  | %.2f € | ~%.2f€ |\n", total_prix, total_prix * 0.75);
 

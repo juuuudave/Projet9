@@ -1,6 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <math.h> 
+#include "useless.h"
 
 
 
@@ -314,48 +315,3 @@ void writeInto( ){
 // plus une ligne de total, affichant la somme des prix susmentionnés
 // ex : "|TOTAL| | | 180 € | ~135€|"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-int main() {
-    // Initialisation des variables pour stocker les données
-    char titres[100][100];
-    float prix_unitaires[100];
-    int quantites[100];
-    int nb_lignes = 0;
-
-    char continuer_str[10];
-    int continuer = 1;
-    while (continuer) {
-        // Saisie des données
-        printf("Titre : ");
-        scanf("%s", titres[nb_lignes]);
-        printf("Prix /u : ");
-        scanf("%f", &prix_unitaires[nb_lignes]);
-        printf("Quantité : ");
-        scanf("%d", &quantites[nb_lignes]);
-
-        // Incrément du nombre de lignes
-        nb_lignes++;
-
-        // Demande de continuation
-        printf("Voulez-vous continuer ? (o/n) ");
-        scanf("%s", continuer_str);
-        if (strcmp(continuer_str, "o") != 0) {
-            continuer = 0;
-        }
-    }
-
-    // Affichage du tableau récapitulatif
-    printf("| Titre | Prix /u | Quantité | Prix total |\n");
-    float total_prix = 0;
-    for (int i = 0; i < nb_lignes; i++) {
-        float prix_total = prix_unitaires[i] * quantites[i];
-        total_prix += prix_total;
-        printf("| %s | %.2f €/u | %d | %.2f € |\n", titres[i], prix_unitaires[i], quantites[i], prix_total);
-    }
-    printf("| TOTAL |  |  | %.2f € | ~%.2f€ |\n", total_prix, total_prix * 0.75);
-
-    return 0;
-}
